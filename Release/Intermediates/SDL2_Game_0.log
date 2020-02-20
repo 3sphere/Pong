@@ -1,0 +1,12 @@
+﻿C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets(376,5): warning MSB8004: Intermediate Directory does not end with a trailing slash.  This build instance will add the slash as it is required to allow proper evaluation of the Intermediate Directory.
+  Game.cpp
+c:\vs projects\sdl2_game_0\src\game.cpp(150): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
+c:\vs projects\sdl2_game_0\src\game.cpp(242): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\vs projects\sdl2_game_0\src\game.cpp(243): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+  Main.cpp
+  SoundManager.cpp
+  TextGenerator.cpp
+  Generating code
+  All 421 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Finished generating code
+  SDL2_Game_0.vcxproj -> C:\VS Projects\SDL2_Game_0\Release\Pong.exe
