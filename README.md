@@ -8,4 +8,6 @@ W: Move paddle up
 S: Move paddle down  
 
 #### Note
-The ball gets a slight speed boost when it hits the edge of a paddle.
+The ball gets a slight speed boost when it hits the edge of a paddle.  
+
+![alt text](https://github.com/3sphere/Pong/blob/master/screenshot.png "screenshot")
