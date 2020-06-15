@@ -5,7 +5,8 @@
 #include <random>
 #include <vector>
 
-Game::Game() : mWindow(nullptr), mRenderer(nullptr), mIsRunning(true), mState(RESET), mPaddleDir(0), mPlayerScore(0), mOpponentScore(0), mTicksCount(0), mResetTicks(2000)
+Game::Game() : mWindow(nullptr), mRenderer(nullptr), mIsRunning(true), mState(RESET),
+mPaddleDir(0), mPlayerScore(0), mOpponentScore(0), mTicksCount(0), mResetTicks(2000)
 {
 }
 
@@ -106,17 +107,22 @@ void Game::ProcessInput()
 
 void Game::Update()
 {
+	// Cap frame rate to 60fps
 	while (!SDL_TICKS_PASSED(SDL_GetTicks(), mTicksCount + 16));
 
+	// time elapsed since last frame
 	float deltaTime = (SDL_GetTicks() - mTicksCount) / 1000.0f;
 
+	// if debugging, prevent deltaTime becoming too large
 	if (deltaTime > 0.05f)
 	{
 		deltaTime = 0.05f;
 	}
 
+	// time elapsed since application started
 	mTicksCount = SDL_GetTicks();
 	
+	// update position of each paddle
 	for (auto &pair : mPaddles)
 	{
 		if (pair.second.dir != 0)
@@ -135,7 +141,7 @@ void Game::Update()
 		}
 	}
 
-	//Set the direction of the opponent paddle
+	// Set the direction of the opponent paddle
 	if (mBallPos.x > SCREEN_WIDTH / 4)
 	{
 		mPaddles[OPPONENT].dir = sign(mBallPos.y - mPaddles[OPPONENT].pos.y, 5.0f);
@@ -166,29 +172,29 @@ void Game::Update()
 
 void Game::HandleCollisions()
 {
-	//Collisions with ball
-	//Top wall
+	// Collisions with ball
+	// Top wall
 	if (mBallPos.y < WALL_THICKNESS + BALL_SIZE / 2 && mBallVel.y < 0.0f)
 	{
 		mBallVel.y *= -1.0f;
 		mSoundManager.PlaySound(SOUND_ID::HIT_WALL);
 	}
-	//Bottom wall
+	// Bottom wall
 	else if (mBallPos.y > SCREEN_HEIGHT - WALL_THICKNESS - BALL_SIZE / 2 && mBallVel.y > 0.0f)
 	{
 		mBallVel.y *= -1.0f;
 		mSoundManager.PlaySound(SOUND_ID::HIT_WALL);
 	}
-	//Paddles
+	// Paddles
 	for (auto &pair : mPaddles)
 	{
 		float diffY = mBallPos.y - pair.second.pos.y;
 		float diffX = mBallPos.x - pair.second.pos.x;
 
-		//If there is a collision between the ball and a paddle
+		// If there is a collision between the ball and a paddle
 		if (fabs(diffY) <= PADDLE_HEIGHT / 2.0f + BALL_SIZE / 2.0f && fabs(diffX) <= PADDLE_THICKNESS / 2.0f + BALL_SIZE / 2.0f && BallTowardsPad(pair.second))
 		{
-			//Distance from point of impact to paddle centre as a fraction of the paddle height
+			// Distance from point of impact to paddle centre as a fraction of the paddle height
 			float diffYFraction = fabs(diffY) / (PADDLE_HEIGHT / 2.0f);
 
 			float bounceAngle = diffYFraction * MAX_BOUNCE_ANGLE;
@@ -207,7 +213,7 @@ void Game::HandleCollisions()
 		}
 	}
 	
-	//Ball moves off screen?
+	// Ball moves off screen?
 	if (mBallPos.x < 0.0f)
 	{
 		mSoundManager.PlaySound(SOUND_ID::POINT_SCORED);
@@ -234,15 +240,15 @@ void Game::ResetBall()
 
 void Game::Render()
 {
-	//Clear back buffer
+	// Clear back buffer
 	SDL_SetRenderDrawColor(mRenderer, 0, 0, 0, 255);
 	SDL_RenderClear(mRenderer);
 	
-	//Draw scoreboard
+	// Draw scoreboard
 	mTextGenerator.Render(mRenderer, std::to_string(mPlayerScore), SCREEN_WIDTH * 0.25f, 20.0f);
 	mTextGenerator.Render(mRenderer, std::to_string(mOpponentScore), SCREEN_WIDTH * 0.75f, 20.0f);
 
-	//Draw dashed line
+	// Draw dashed line down the centre
 	SDL_SetRenderDrawColor(mRenderer, 255, 255, 255, 255);
 	for (int y = 0; y < SCREEN_HEIGHT; y += SCREEN_HEIGHT / 20)
 	{
@@ -250,16 +256,16 @@ void Game::Render()
 		SDL_RenderFillRect(mRenderer, &dashedLine);
 	}
 
-	//Draw walls
+	// Draw walls:
 	SDL_SetRenderDrawColor(mRenderer, 200, 200, 200, 255);
 	SDL_Rect wall{ 0,0,SCREEN_WIDTH,WALL_THICKNESS };
-	//Top wall
+	// Top wall
 	SDL_RenderFillRect(mRenderer, &wall);
-	//Bottom wall
+	// Bottom wall
 	wall.y = SCREEN_HEIGHT - WALL_THICKNESS;
 	SDL_RenderFillRect(mRenderer, &wall);
 
-	//Paddles
+	// Draw paddles
 	SDL_SetRenderDrawColor(mRenderer, 255, 255, 255, 255);
 	for (auto &pair : mPaddles)
 	{
@@ -273,7 +279,7 @@ void Game::Render()
 		SDL_RenderFillRect(mRenderer, &rect);
 	}
 
-	//Ball
+	// Draw ball
 	SDL_Rect ball{
 		static_cast<int>(mBallPos.x - BALL_SIZE/2),
 		static_cast<int>(mBallPos.y - BALL_SIZE/2),
@@ -282,7 +288,7 @@ void Game::Render()
 	};
 	SDL_RenderFillRect(mRenderer, &ball);
 
-	//Swap front and back buffers
+	// Swap front and back buffers
 	SDL_RenderPresent(mRenderer);
 }
 
