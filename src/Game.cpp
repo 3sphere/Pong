@@ -294,6 +294,7 @@ void Game::Render()
 
 void Game::InitBallVelocity()
 {
+	// Randomise the ball's initial velocity
 	std::vector<int> direction{ -1, 1 };
 	std::uniform_int_distribution<unsigned> u(0, 1);
 	std::default_random_engine e(SDL_GetTicks());
