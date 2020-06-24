@@ -1,7 +1,7 @@
 # Pong
 
 ## About
-This is my attempt to recreate the classic arcade game *Pong* using C++. This is a single player version, where the player is against a simple AI-controlled paddle.
+This is my attempt to recreate the classic arcade game [*Pong*](https://www.youtube.com/watch?v=fiShX2pTz9A) using C++. This is a single player version, where the player is against a simple AI-controlled paddle.
 
 ![Screenshot](https://github.com/3sphere/Pong/blob/master/screenshot.png)
 
