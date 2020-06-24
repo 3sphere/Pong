@@ -7,7 +7,7 @@ This was my first game project after learning the fundamentals of C++, so the ma
 
 ![Screenshot](https://github.com/3sphere/Pong/blob/master/screenshot.png)
 
-Video demo: https://www.youtube.com/watch?v=84S4RxoDW0w  
+Video: https://www.youtube.com/watch?v=84S4RxoDW0w  
 
 ### Libraries used
 **SDL 2.0** for windowing and rendering of simple graphics  
